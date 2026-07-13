@@ -24,7 +24,7 @@ vanished.pt {
 
     @not_email_logo {
 
-        not path /assets/logo-without-text.png
+        not path /assets/LogoWithoutText.png
 
     }
 
