@@ -1,0 +1,117 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: vanished_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - vanished_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  db:
+    image: postgres:16-alpine
+    container_name: vanished_postgres
+    restart: unless-stopped
+    env_file:
+      - ../Vanished.Api/.env
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - vanished_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  db-init:
+    build:
+      context: ../Vanished.Api
+      dockerfile: dockerfile
+    container_name: vanished_db_init
+    restart: "no"
+    env_file:
+      - ../Vanished.Api/.env
+    command: ["python", "-m", "app.db_init"]
+    networks:
+      - vanished_net
+    depends_on:
+      db:
+        condition: service_healthy
+
+  postgres-backup:
+    image: postgres:16-alpine
+    container_name: vanished_postgres_backup
+    restart: "no"
+    profiles: ["backup"]
+    env_file:
+      - ../Vanished.Api/.env
+    volumes:
+      - ./scripts/postgres-backup.sh:/usr/local/bin/postgres-backup.sh:ro
+      - ./backups:/backups
+    networks:
+      - vanished_net
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["/usr/local/bin/postgres-backup.sh"]
+
+  api:
+    build:
+      context: ../Vanished.Api
+      dockerfile: dockerfile
+    container_name: vanished_api
+    restart: unless-stopped
+    env_file:
+      - ../Vanished.Api/.env
+    expose:
+      - "5000"
+    environment:
+      AUTO_CREATE_SCHEMA: "false"
+      VANISHED_API_HOST: "0.0.0.0"
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000", "--loop", "uvloop", "--http", "httptools", "--access-log"]
+    networks:
+      - vanished_net
+    depends_on:
+      db:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  caddy:
+    image: caddy:2
+    container_name: vanished_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ../Website:/var/www/vanished:ro
+      - /opt/vanished/certs:/certs:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - vanished_net
+    depends_on:
+      - api
+
+volumes:
+  pg_data:
+  redis_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  vanished_net:
+    driver: bridge

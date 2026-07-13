@@ -1,0 +1,145 @@
+<Styles xmlns="https://github.com/avaloniaui">
+  <Style Selector="ScrollBar">
+    <Setter Property="Width" Value="6"/>
+    <Setter Property="MinWidth" Value="6"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="Opacity" Value="0"/>
+    <Setter Property="Transitions">
+      <Transitions>
+        <DoubleTransition Property="Opacity" Duration="0:0:0.15"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="ScrollViewer:pointerover ScrollBar">
+    <Setter Property="Opacity" Value="1"/>
+  </Style>
+
+  <Style Selector="ScrollBar /template/ Thumb">
+    <Setter Property="Background" Value="{DynamicResource VanishedScrollbarThumbBrush}"/>
+    <Setter Property="CornerRadius" Value="3"/>
+    <Setter Property="MinHeight" Value="32"/>
+    <Setter Property="Transitions">
+      <Transitions>
+        <BrushTransition Property="Background" Duration="0:0:0.12"/>
+      </Transitions>
+    </Setter>
+  </Style>
+
+  <Style Selector="ScrollBar /template/ Thumb:pointerover">
+    <Setter Property="Background" Value="{DynamicResource VanishedScrollbarThumbHoverBrush}"/>
+  </Style>
+
+  <Style Selector="ScrollBar /template/ Thumb:pressed">
+    <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+  </Style>
+
+  <Style Selector="ScrollBar /template/ RepeatButton">
+    <Setter Property="IsVisible" Value="False"/>
+    <Setter Property="Height" Value="0"/>
+    <Setter Property="Width" Value="0"/>
+  </Style>
+
+  <!-- Track has no Background property in this Avalonia version.
+       Keep it unstyled to avoid AVLN2000/AVLN2200 while customising Thumb/RepeatButton. -->
+
+
+  <!-- TextBox normal Vanished: fundo consistente em normal/hover/focus.
+       Evita o efeito de preencher a área interna a preto quando recebe foco. -->
+  <Style Selector="TextBox.vanished-textbox">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputBorderBrush}"/>
+    <Setter Property="BorderThickness" Value="1"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:pointerover">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputBorderBrush}"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:focus">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputFocusBorderBrush}"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:focus-visible">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputFocusBorderBrush}"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox /template/ Border">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputBorderBrush}"/>
+    <Setter Property="CornerRadius" Value="10"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:pointerover /template/ Border">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputBorderBrush}"/>
+    <Setter Property="CornerRadius" Value="10"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:focus /template/ Border">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputFocusBorderBrush}"/>
+    <Setter Property="CornerRadius" Value="10"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-textbox:focus-visible /template/ Border">
+    <Setter Property="Background" Value="{DynamicResource VanishedInputBackgroundBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource VanishedInputFocusBorderBrush}"/>
+    <Setter Property="CornerRadius" Value="10"/>
+  </Style>
+
+  <!-- TextBoxes embutidas em fields customizados.
+       Remove completamente o chrome/focus visual nativo do Fluent TextBox;
+       a borda visível fica apenas no Border exterior controlado por código. -->
+  <Style Selector="TextBox.vanished-inner-input">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:pointerover">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:focus">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:focus-visible">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input /template/ Border">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:pointerover /template/ Border">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:focus /template/ Border">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+  <Style Selector="TextBox.vanished-inner-input:focus-visible /template/ Border">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+  </Style>
+
+</Styles>
