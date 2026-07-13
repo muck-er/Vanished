@@ -4,91 +4,88 @@
 
 # Vanished
 
-### Comunicação privada com cifragem ponta-a-ponta
+### Private communication with end-to-end encryption
 
-Aplicação desktop de mensagens privadas com cliente **.NET/Avalonia**, API **FastAPI**, base de dados **PostgreSQL**, cache **Redis** e infraestrutura publicada com **Docker**, **Caddy**, **Cloudflare** e **TLS**.
+A private desktop messaging application featuring a **.NET/Avalonia** client, a **FastAPI** API, a **PostgreSQL** database, **Redis** caching, and infrastructure deployed with **Docker**, **Caddy**, **Cloudflare**, and **TLS**.
 
 <br>
 
-![Status](https://img.shields.io/badge/status-protótipo%20funcional-00AEEF?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-functional%20prototype-00AEEF?style=for-the-badge)
 ![PAP](https://img.shields.io/badge/PAP-2023--2026-0F172A?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-Apache%202.0-2563EB?style=for-the-badge)
 ![Security](https://img.shields.io/badge/security-E2EE-10B981?style=for-the-badge)
 
 <br>
 
-[Website](https://vanished.pt) · [Licença](#licença)
+[Website](https://vanished.pt) · [License](#license)
 
 </div>
 
 ---
 
-## Índice
+## Table of Contents
 
-- [Sobre](#sobre)
-- [Destaques](#destaques)
-- [Demonstração](#demonstração)
-- [Stack tecnológica](#stack-tecnológica)
-- [Arquitetura](#arquitetura)
-- [Segurança](#segurança)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Execução](#execução)
-- [Testes e validação](#testes-e-validação)
-- [Relatório técnico](#relatório-técnico)
+- [About](#about)
+- [Highlights](#highlights)
+- [Demo](#demo)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Security](#security)
+- [Testing and Validation](#testing-and-validation)
+- [Technical Report](#technical-report)
 - [Roadmap](#roadmap)
-- [Licença](#licença)
-- [Autor](#autor)
+- [License](#license)
+- [Author](#author)
 
 ---
 
-## Sobre
+## About
 
-**Vanished** é uma aplicação de comunicação privada desenvolvida no âmbito da **Prova de Aptidão Profissional** do curso de **Programador/a de Informática**.
+**Vanished** is a private communication application developed as part of the **Professional Aptitude Project** for the **Computer Programming** course.
 
-O projeto demonstra uma arquitetura cliente-servidor onde o conteúdo das mensagens é protegido no cliente antes de ser enviado para a API. O servidor gere autenticação, sessões, dispositivos, conversas e entrega de mensagens, mas trabalha apenas com envelopes cifrados.
+The project demonstrates a client-server architecture in which message content is protected on the client before being sent to the API. The server manages authentication, sessions, devices, conversations, and message delivery, but only handles encrypted envelopes.
 
-A aplicação foi construída com foco em:
+The application was built with a focus on:
 
-- privacidade;
-- segurança aplicacional;
-- cifragem ponta-a-ponta;
-- separação de responsabilidades;
-- infraestrutura real.
+- privacy;
+- application security;
+- end-to-end encryption;
+- separation of responsibilities;
+- real-world infrastructure.
 
 ---
 
-## Destaques
+## Highlights
 
-| Área | Implementação |
+| Area | Implementation |
 |---|---|
-| Cliente desktop | C# · .NET 8 · Avalonia UI |
+| Desktop client | C# · .NET 8 · Avalonia UI |
 | Backend | Python · FastAPI · Uvicorn |
-| Base de dados | PostgreSQL |
-| Cache e estado temporário | Redis |
-| Tempo real | WebSocket |
+| Database | PostgreSQL |
+| Cache and temporary state | Redis |
+| Real-time communication | WebSocket |
 | Reverse proxy | Caddy |
-| DNS e camada pública | Cloudflare |
-| Transporte seguro | HTTPS/TLS |
-| Cifragem ponta-a-ponta | X25519 · HKDF-SHA256 · AES-256-GCM |
-| Assinatura de pedidos | Ed25519 |
-| Derivação de chaves | Argon2id |
-| Licença do código | Apache License 2.0 |
-| Marca e materiais visuais | Todos os direitos reservados |
+| DNS and public-facing layer | Cloudflare |
+| Secure transport | HTTPS/TLS |
+| End-to-end encryption | X25519 · HKDF-SHA256 · AES-256-GCM |
+| Request signing | Ed25519 |
+| Key derivation | Argon2id |
+| Source code license | Apache License 2.0 |
+| Brand and visual materials | All rights reserved |
 
 ---
 
-## Demonstração
+## Demo
 
-| Recurso | Endereço |
+| Resource | Address |
 |---|---|
-| Website público | https://vanished.pt |
+| Public website | https://vanished.pt |
 
-O website apresenta o projeto, as funcionalidades principais, a abordagem de segurança, a secção de perguntas frequentes e os downloads da aplicação.
+The website presents the project, its main features, the security approach, the frequently asked questions section, and the application downloads.
 
 ---
 
-## Stack tecnológica
+## Technology Stack
 
 <div align="center">
 
@@ -105,7 +102,7 @@ O website apresenta o projeto, as funcionalidades principais, a abordagem de seg
 
 </div>
 
-### Cliente desktop
+### Desktop Client
 
 - C#;
 - .NET 8;
@@ -117,7 +114,7 @@ O website apresenta o projeto, as funcionalidades principais, a abordagem de seg
 - Konscious Argon2;
 - System.IdentityModel.Tokens.Jwt.
 
-### Servidor API
+### API Server
 
 - Python;
 - FastAPI;
@@ -129,7 +126,7 @@ O website apresenta o projeto, as funcionalidades principais, a abordagem de seg
 - argon2-cffi;
 - WebSocket.
 
-### Infraestrutura
+### Infrastructure
 
 - PostgreSQL;
 - Redis;
@@ -142,139 +139,139 @@ O website apresenta o projeto, as funcionalidades principais, a abordagem de seg
 
 ---
 
-## Arquitetura
+## Architecture
 
-O Vanished está dividido em três camadas principais.
+Vanished is divided into three main layers.
 
-### Cliente desktop
+### Desktop Client
 
-O cliente executa a interface, autenticação local, gestão de sessão, comunicação com a API, geração de material criptográfico, cifragem das mensagens e assinatura dos pedidos críticos.
+The client handles the user interface, local authentication, session management, communication with the API, cryptographic material generation, message encryption, and the signing of critical requests.
 
-### Servidor API
+### API Server
 
-A API valida utilizadores, dispositivos, permissões, sessões e pedidos assinados. Também gere conversas, mensagens cifradas, eventos WebSocket e persistência.
+The API validates users, devices, permissions, sessions, and signed requests. It also manages conversations, encrypted messages, WebSocket events, and data persistence.
 
-### Infraestrutura pública
+### Public Infrastructure
 
-A infraestrutura utiliza Docker Compose para organizar os serviços, Caddy como reverse proxy, Cloudflare para DNS/proxy e TLS/HTTPS para transporte seguro.
+The infrastructure uses Docker Compose to organise the services, Caddy as the reverse proxy, Cloudflare for DNS and proxy services, and TLS/HTTPS for secure transport.
 
 ---
 
-## Segurança
+## Security
 
-O projeto aplica segurança desde a arquitetura. As mensagens são cifradas no cliente antes de serem enviadas para a API. O servidor não recebe o conteúdo das mensagens privadas em texto claro.
+The project applies security by design throughout its architecture. Messages are encrypted on the client before being sent to the API. The server never receives the content of private messages in plaintext.
 
-### Mecanismos principais
+### Main Mechanisms
 
-| Mecanismo | Função |
+| Mechanism | Purpose |
 |---|---|
-| X25519 | Acordo de chaves entre remetente e destinatário |
-| HKDF-SHA256 | Derivação de chave simétrica a partir do segredo partilhado |
-| AES-256-GCM | Cifragem autenticada das mensagens |
-| Ed25519 | Assinatura digital de pedidos por dispositivo |
-| Argon2id | Derivação de chaves locais |
-| JWT HS256 | Sessões autenticadas |
-| Refresh tokens com hash | Redução de exposição em caso de fuga da base de dados |
-| Redis | Rate limiting e proteção anti-replay |
-| TLS/HTTPS | Transporte seguro entre cliente e servidor |
-| UFW Firewall | Controlo de exposição do servidor |
+| X25519 | Key agreement between the sender and recipient |
+| HKDF-SHA256 | Symmetric key derivation from the shared secret |
+| AES-256-GCM | Authenticated message encryption |
+| Ed25519 | Digital signing of requests by each device |
+| Argon2id | Local key derivation |
+| JWT HS256 | Authenticated sessions |
+| Hashed refresh tokens | Reduced exposure in the event of a database breach |
+| Redis | Rate limiting and anti-replay protection |
+| TLS/HTTPS | Secure transport between the client and server |
+| UFW Firewall | Control over server exposure |
 
-### Princípios aplicados
+### Applied Principles
 
-- Chaves privadas mantidas no cliente;
-- Servidor limitado a envelopes cifrados e metadados necessários;
-- Separação entre cliente, API, base de dados, cache e reverse proxy;
-- Pedidos críticos assinados por dispositivo;
-- Limitação de abuso com rate limiting;
-- Proteção contra reutilização de pedidos;
-- Registos de segurança sem exposição de segredos.
+- Private keys are kept on the client;
+- The server is limited to encrypted envelopes and necessary metadata;
+- Separation between the client, API, database, cache, and reverse proxy;
+- Critical requests are signed by the device;
+- Abuse prevention through rate limiting;
+- Protection against request replay attacks;
+- Security logging without exposing secrets.
 
 ---
 
-## Testes e validação
+## Testing and Validation
 
-O projeto foi validado através de testes manuais, inspeção da base de dados, análise dos fluxos críticos, verificação da infraestrutura e revisão dos mecanismos de segurança.
+The project was validated through manual testing, database inspection, analysis of critical workflows, infrastructure verification, and a review of the implemented security mechanisms.
 
-### Fluxos testados
+### Tested Workflows
 
-- Criação de conta;
-- Validação de e-mail;
+- Account creation;
+- Email verification;
 - Login;
-- Gestão de sessões;
-- Registo de dispositivos;
-- Pesquisa de utilizadores;
-- Pedidos de conversa;
-- Envio e receção de mensagens;
-- Comunicação WebSocket;
-- Persistência de envelopes cifrados;
-- Configuração HTTPS;
+- Session management;
+- Device registration;
+- User search;
+- Conversation requests;
+- Sending and receiving messages;
+- WebSocket communication;
+- Encrypted envelope persistence;
+- HTTPS configuration;
 - Reverse proxy;
 - Firewall;
 - Docker Compose;
-- Website de apresentação.
+- Project presentation website.
 
 ---
 
-## Relatório técnico
+## Technical Report
 
-O relatório da Prova de Aptidão Profissional documenta o projeto em detalhe.
+The Professional Aptitude Project report documents the project in detail.
 
-Inclui:
+It includes:
 
-- introdução e motivação;
-- estado da arte;
-- contextualização do projeto;
-- arquitetura da aplicação;
-- fluxos de criação de conta, login e mensagens;
-- modelo entidade-relação;
-- requisitos funcionais e não funcionais;
-- tecnologias utilizadas;
-- criptografia e segurança aplicacional;
-- metodologia;
-- implementação;
-- configuração de servidor, domínio, Cloudflare e firewall;
-- conclusão;
-- referências bibliográficas;
-- anexos técnicos.
+- introduction and motivation;
+- state of the art;
+- project context;
+- application architecture;
+- account creation, login, and messaging workflows;
+- entity-relationship model;
+- functional and non-functional requirements;
+- technologies used;
+- cryptography and application security;
+- methodology;
+- implementation;
+- server, domain, Cloudflare, and firewall configuration;
+- conclusion;
+- bibliographic references;
+- technical appendices.
 
 ---
 
 ## Roadmap
 
-- Implementação de Double Ratchet completo;
-- Auditoria externa ao código criptográfico;
-- Suporte para anexos cifrados;
-- Aplicação mobile;
-- Chamadas cifradas de voz e vídeo;
-- Testes automatizados completos;
-- Assinatura digital dos instaladores;
-- Sistema público de checksums para releases;
-- Painel de monitorização operacional.
+- Implementation of a complete Double Ratchet protocol;
+- External audit of the cryptographic code;
+- Support for encrypted attachments;
+- Mobile application;
+- Encrypted voice and video calls;
+- Complete automated testing;
+- Digital signing of installers;
+- Public checksum system for releases;
+- Operational monitoring dashboard.
 
 ---
 
-## Licença
+## License
 
-O código-fonte está licenciado sob a **Apache License 2.0**.
+The source code is licensed under the **Apache License 2.0**.
 
-O nome **Vanished**, o logotipo, o relatório PAP, capturas de ecrã, diagramas, imagens e restantes materiais visuais são propriedade do autor e mantêm **todos os direitos reservados**.
+The **Vanished** name, logo, Professional Aptitude Project report, screenshots, diagrams, images, and all other visual materials are the property of the author and remain protected under **all rights reserved**.
 
-Ver:
+See:
 
 - [`LICENSE`](LICENSE)
 - [`NOTICE`](NOTICE)
 
 ---
 
-## Autor
+## Author
 
 <div align="center">
 
 **António João Carvalho Silva**
 
-Curso de **Programador/a de Informática**  
+**Computer Programming** Course  
 **Escola Secundária Frei Heitor Pinto**  
-Prova de Aptidão Profissional · **2023–2026**
+Professional Aptitude Project · **2023–2026**
 
 </div>
 
@@ -282,6 +279,6 @@ Prova de Aptidão Profissional · **2023–2026**
 
 <div align="center">
 
-**Vanished** — comunicação privada com E2EE.
+**Vanished** — private communication with E2EE.
 
 </div>
