@@ -261,8 +261,8 @@ O nome **Vanished**, o logotipo, o relatório PAP, capturas de ecrã, diagramas,
 
 Ver:
 
-- [`LICENSE`](LICENSE/LICENSE)
-- [`NOTICE`](LICENSE/NOTICE)
+- [`LICENSE`](LICENSE)
+- [`NOTICE`](NOTICE)
 
 ---
 
