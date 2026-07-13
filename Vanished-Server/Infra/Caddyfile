@@ -1,62 +1,123 @@
-www.vanished.pt {
-    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
-    redir https://vanished.pt{uri} permanent
-}
-
-vanished.pt {
-    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
-    encode zstd gzip
-    root * /var/www/vanished
-
-    @email_logo path /assets/logo-without-text.png
-
-    @not_email_logo {
-        not path /assets/logo-without-text.png
-    }
-
-    header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "DENY"
-        Referrer-Policy "no-referrer"
-        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
-        Cross-Origin-Opener-Policy "same-origin"
-        -Server
-        Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://api.vanished.pt wss://api.vanished.pt; upgrade-insecure-requests"
-    }
-
-    header @not_email_logo {
-        Cross-Origin-Resource-Policy "same-origin"
-    }
-
-    header @email_logo {
-        Cross-Origin-Resource-Policy "cross-origin"
-        Access-Control-Allow-Origin "*"
-        Cache-Control "public, max-age=31536000, immutable"
-    }
-
-    file_server
-}
-
-api.vanished.pt {
-    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
-    encode zstd gzip
-
-    header {
-        Strict-Transport-Security "max-age=31536000; includeSubDomains"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "DENY"
-        Referrer-Policy "no-referrer"
-        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
-        Cache-Control "no-store"
-        Pragma "no-cache"
-        -Server
-    }
-
-    reverse_proxy api:5000 {
-        header_up Host {host}
-        header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-    }
+www.vanished.pt {
+
+    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
+
+    redir https://vanished.pt{uri} permanent
+
+}
+
+
+
+vanished.pt {
+
+    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
+
+    encode zstd gzip
+
+    root * /var/www/vanished
+
+
+
+    @email_logo path /assets/LogoWithoutText.png
+
+
+
+    @not_email_logo {
+
+        not path /assets/logo-without-text.png
+
+    }
+
+
+
+    header {
+
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+        X-Content-Type-Options "nosniff"
+
+        X-Frame-Options "DENY"
+
+        Referrer-Policy "no-referrer"
+
+        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+        Cross-Origin-Opener-Policy "same-origin"
+
+        -Server
+
+        Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://api.vanished.pt wss://api.vanished.pt; upgrade-insecure-requests"
+
+    }
+
+
+
+    header @not_email_logo {
+
+        Cross-Origin-Resource-Policy "same-origin"
+
+    }
+
+
+
+    header @email_logo {
+
+        Cross-Origin-Resource-Policy "cross-origin"
+
+        Access-Control-Allow-Origin "*"
+
+        Cache-Control "public, max-age=31536000, immutable"
+
+    }
+
+
+
+    file_server
+
+}
+
+
+
+api.vanished.pt {
+
+    tls /certs/cloudflare-origin.pem /certs/cloudflare-origin.key
+
+    encode zstd gzip
+
+
+
+    header {
+
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+        X-Content-Type-Options "nosniff"
+
+        X-Frame-Options "DENY"
+
+        Referrer-Policy "no-referrer"
+
+        Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+        Cache-Control "no-store"
+
+        Pragma "no-cache"
+
+        -Server
+
+    }
+
+
+
+    reverse_proxy api:5000 {
+
+        header_up Host {host}
+
+        header_up X-Real-IP {remote_host}
+
+        header_up X-Forwarded-For {remote_host}
+
+        header_up X-Forwarded-Proto {scheme}
+
+    }
+
 }
